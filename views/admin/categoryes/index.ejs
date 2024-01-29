@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Blog com bootstrap</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    </head>
+    <body>
+        <nav class="navbar navbar-dark bg-primary">
+            <a class="navbar-brand" href="/">Blog com bootstrap</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-iten">
+                    <a class="nav-link" href="/admin/categoryes">Categorias</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="container">
+            <h2>Categorias</h2>
+            <a class="btn btn-success" href="/admin/categoryes/new">Criar Categoria</a><br><br>
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="card-header">
+                        <th>Id</th>
+                        <th>Título</th>
+                        <th>Slug</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tboddy>
+                    <% categoryes.forEach((category) => { %>
+                        <tr>
+                            <th>
+                                <%= category.id %>
+                            </th>
+                            <th>
+                                <%= category.titulo %>
+                            </th>
+                            <th>
+                                <%= category.slug %>
+                            </th>
+                            <th>
+                                <form onsubmit="confirmDelet(event, this)" method="post" action="/category/delet" style="display: inline;">
+                                    <input type="hidden" name="id" value="<%= category.id %>">
+                                    <button class="btn btn-danger">Escluir</button>
+                                </form>
+                                <form onsubmit="confirmEdit(event, this)" method="post" action="/admin/category/edit" style="display: inline;">
+                                    <input type="hidden" name="id" value="<%= category.id %>">
+                                    <button class="btn btn-warning">Editar</button>
+                                </form>
+                            </th>
+                        </tr>
+                    <% }) %>
+                </tboddy>
+            </table>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="/js/bootstrap.min.js"></script>
+
+        <script>
+            function confirmDelet(e, form){
+                e.preventDefault();
+                let confirmation = confirm("Você quer realmente deletar essa categoria ?");
+                if(confirmation){
+                    form.submit();
+                }else{}
+            }
+
+            function confirmEdit(e, form){
+                e.preventDefault();
+                let confirmation = confirm("Você quer realmente editar essa categoria ?");
+                if(confirmation){
+                    form.submit();
+                }else{}
+            }
+        </script>
+    </body>
+</html>

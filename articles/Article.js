@@ -16,7 +16,7 @@ const article = connection.define("articles", {
     }
 })
 
-article.belongsTo(category);
+article.belongsTo(category, {as: 'category', foreignKey: 'categoryId' });
 category.hasMany(article);
 
 article.sync({ force: false }).then(() => {

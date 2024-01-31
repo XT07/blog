@@ -1,0 +1,58 @@
+<%- include ('../../partials/header.ejs') %>
+    <div class="container">
+        <h2>Artigos</h2>
+        <a href="/admin/articles/new" class="btn btn-success">Criar artigo</a><br><br>
+        <table class="table table-bordered">
+            <thead>
+                <tr class="card-header">
+                    <th>Id</th>
+                    <th>Título</th>
+                    <th>Slug</th>
+                    <th>Corpo</th>
+                    <th>Categoria</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% articles.forEach((article) => { %>
+                    <tr>
+                        <td><%= article.id %></td>
+                        <td><%= article.titulo %></td>
+                        <td><%= article.slug %></td>
+                        <td><%= article.body %></td>
+                        <td>
+                           <%= article.category_titulo %>
+                        </td>
+                        <td>
+                            <form onsubmit="confirmDelet(event, this)" method="post" action="/admin/articles/delet" style="display: inline;">
+                                <input type="hidden" name="id" value="<%= article.id %>">
+                                <button class="btn btn-danger">Excluir</button>
+                            </form><br><br>
+                            <form onsubmit="confirmEdit(event, this)" method="post" action="/admin/articles/edit" style="display: inline;">
+                                <input type="hidden" name="id" value="<%= article.id %>">
+                                <button class="btn btn-warning">Editar</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function confirmDelet(e, form){
+            e.preventDefault();
+            let confirmation = confirm("Você quer realmente deletar esse artigo ?");
+            if(confirmation){
+                form.submit();
+            }else{}
+        }
+
+        function confirmEdit(e, form){
+            e.preventDefault();
+            let confirmation = confirm("Você quer realmente editar esse artigo ?");
+            if(confirmation){
+                form.submit();
+            }else{}
+        }
+    </script>
+<%- include ('../../partials/footer.ejs') %>

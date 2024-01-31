@@ -1,26 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <title>Blog com bootstrap</title>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="/css/bootstrap.min.css" />
-    </head>
-    <body>
-        <nav class="navbar navbar-dark bg-primary">
-                <a class="navbar-brand" href="/">Blog com bootstrap</a>
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-iten">
-                        <a class="nav-link" href="/admin/categoryes">Categorias</a>
-                    </li>
-                </ul>
-        </nav>
+<%- include ('../../partials/header.ejs') %>
         <div class="container">
             <div class="card">
                 <div class="card-header">
                     <h2>Cadastro de categorias</h2>
                 </div>
                 <viv class="card-boddy">
-                    <form method="post" action="/categoryes/save">
+                    <form onsubmit="confirmCategory(event, this)" method="post" action="/categoryes/save">
                         <label for="title">Título</label><br>
                         <input class="form-control" type="text" name="title" id="title" placeholder="Coloque o titulo da categoria"><br>
         
@@ -29,9 +14,15 @@
                 </viv>
             </div>
         </div>
-
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="/js/bootstrap.min.js"></script>
-    </body>
-</html>
+        <script>
+            function confirmCategory(e, form){
+                e.preventDefault();
+                let title = document.getElementById("title").value;
+                if(title == ""){
+                    alert("Preencha o campo");
+                }else{
+                    form.submit();
+                }
+            }
+        </script>
+<%- include ('../../partials/footer.ejs') %>

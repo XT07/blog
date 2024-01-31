@@ -1,0 +1,48 @@
+<%- include ('../../partials/header.ejs') %>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Edição de artigos</h2>
+            </div>
+            <viv class="card-boddy">
+                <form onsubmit="edit(event, this)" method="post" action="/articles/update">
+                    <label for="title">Título</label><br>
+                    <input type="hidden" value="<%= article.id%>" name="id" />
+                    <input class="form-control" type="text" name="title" id="title" value="<%= article.titulo %>"
+                        placeholder="Coloque o titulo do artigo"><br>
+
+                    <label for="article">Corpo</label><br>
+                    <textarea class="form-control" name="boddy" id="article"><%= article.body %></textarea><br><br>
+
+                    <label for="categoryes">Categorias</label><br>
+                    <select id="categoryes" name="category" class="form-control">
+                        <% category.forEach((categoryes) => { %>
+                            <option value="<%= categoryes.id %>"><%= categoryes.titulo %></option>
+                        <% }) %>
+                    </select><br><br>
+
+                    <input type="submit" value="Atualizar" class="btn btn-success">
+                </form>
+            </viv>
+        </div>
+    </div>
+    <script>
+        function edit(e, form) {
+            e.preventDefault();
+            let title = document.getElementById("title").value;
+            let confirmation = confirm(`Você tem certeza das alterações que você fez ?`);
+            if (confirmation) {
+                form.submit();
+            }
+        }
+    </script>
+    <%- include ('../../partials/footer.ejs') %>
+        <script src="/tinymce/tinymce.min.js"></script>
+        <script>
+
+            tinymce.init({
+                language: "pt_BR",
+                selector: "#article",
+                plugins: ["advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons"]
+            })
+        </script>

@@ -1,8 +1,8 @@
-<%- include('partials/header') %>
+<%- include('../../partials/header') %>
     <div class="container">
         <h2>Sejam bem vindos ao meu blog</h2>
 
-        <% article.forEach((articles)=> { %>
+        <% result.articles.rows.forEach((articles)=> { %>
             <hr>
             <h2>
                 <%= articles.titulo %>
@@ -13,4 +13,4 @@
         <% }) %>
     </div>
 
-    <%- include('partials/footer') %>
+    <%- include('../../partials/footer') %>

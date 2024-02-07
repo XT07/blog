@@ -17,7 +17,11 @@
                     <label for="categoryes">Categorias</label><br>
                     <select id="categoryes" name="category" class="form-control">
                         <% category.forEach((categoryes) => { %>
-                            <option value="<%= categoryes.id %>"><%= categoryes.titulo %></option>
+                            <% if(categoryes.id == article.categoryId){ %>
+                                <option value="<%= categoryes.id %>" selected><%= categoryes.titulo %></option>
+                            <% }else{ %>
+                                <option value="<%= categoryes.id %>"><%= categoryes.titulo %></option>
+                            <% } %>
                         <% }) %>
                     </select><br><br>
 

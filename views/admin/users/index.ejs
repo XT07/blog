@@ -1,0 +1,51 @@
+<%- include ('../../partials/header.ejs') %>
+        <div class="container">
+            <h2>Usuários</h2>
+            <a class="btn btn-success" href="/admin/users/create">Criar usuario</a><br><br>
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="card-header">
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Senha</th>
+                    </tr>
+                </thead>
+                <tboddy>
+                    <% users.forEach((user) => { %>
+                        <tr>
+                            <th>
+                                <%= user.id %>
+                            </th>
+                            <th>
+                                <%= user.name %>
+                            </th>
+                            <th>
+                                <%= user.email %>
+                            </th>
+                            <th>
+                                <%= user.password %>
+                            </th>
+                        </tr>
+                    <% }) %>
+                </tboddy>
+            </table>
+        </div>
+        <script>
+            function confirmDelet(e, form){
+                e.preventDefault();
+                let confirmation = confirm("Você quer realmente deletar essa categoria ?");
+                if(confirmation){
+                    form.submit();
+                }else{}
+            }
+
+            function confirmEdit(e, form){
+                e.preventDefault();
+                let confirmation = confirm("Você quer realmente editar essa categoria ?");
+                if(confirmation){
+                    form.submit();
+                }else{}
+            }
+        </script>
+<%- include ('../../partials/footer.ejs') %>

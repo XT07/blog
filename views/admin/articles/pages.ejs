@@ -11,6 +11,19 @@
             <br><br>
             <%+ articles.category_titulo %>
         <% }) %>
+            <div class="row">
+                <div class="col col-12">
+                    <% if(result.page > 2){ %>
+                        <a style="float: left;" href="/articles/pages/<%= result.page - 1 %>"><<< Voltar</a>
+                    <% }else if(result.page == 2){ %>
+                        <a style="float: left;" href="/"><<< Voltar</a>
+                    <% } %>
+                    <% if(result.next){ %>
+                        <a style="float: right;" href="/articles/pages/<%= result.page + 1 %>">Próximo >>></a>
+                    <% }else{} %>
+                </div>
+            </div>
+            <hr>
     </div>
 
     <%- include('../../partials/footer') %>

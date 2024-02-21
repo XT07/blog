@@ -1,0 +1,34 @@
+<%- include ('../../partials/header.ejs') %>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Login</h2>
+                </div>
+                <viv class="card-boddy">
+                    <form onsubmit="confirmUser(event, this)" method="post" action="/authenticate">  
+                        <label for="email">E-mail:</label><br>
+                        <input class="form-control" type="email" name="email" id="email" placeholder="exemplo@gmail.com"><br>
+                        
+                        <label for="pass">Senha:</label><br>
+                        <input class="form-control" type="password" name="password" id="pass" placeholder="***********"><br>
+                        
+                        <input type="submit" value="Salvar" class="btn btn-success">
+                    </form>
+                </viv>
+            </div>
+        </div>
+        <script>
+            function confirmUser(e, form){
+                e.preventDefault();
+                let email = document.getElementById("email").value;
+                let pass = document.getElementById("pass").value;
+                if(email == "") {
+                    alert("Preencha o campo e-mail")
+                }else if(pass == "") {
+                    alert("Preencha o campo senha")
+                }else{
+                    form.submit()
+                }
+            }
+        </script>
+<%- include ('../../partials/footer.ejs') %>

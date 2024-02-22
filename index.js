@@ -9,7 +9,8 @@ const registerArticle = require("./articles/Article");
 const { Sequelize, QueryTypes } = require("sequelize");
 const userControler = require("./user/userControler");
 const userDb = require("./user/Users");
-const session = require("express-session")
+const session = require("express-session");
+const adminAuth = require("./midolowares/adminAuth");
 
 const sequelize = require("./database/connection");
 
@@ -36,7 +37,7 @@ ex.use("/", categoryController);
 ex.use("/", articlesController);
 ex.use("/", userControler);
 
-ex.get("/", (req, res) => {
+ex.get("/", adminAuth, (req, res) => {
     registerArticle.findAll({ limit: 4, order: [ [ "id","DESC" ] ] }).then((articles) => {
         res.render("home", {
             article: articles
@@ -44,7 +45,7 @@ ex.get("/", (req, res) => {
     })
 })
 
-ex.get("/articles/pages/:num", (req, res) => {
+ex.get("/articles/pages/:num", adminAuth, (req, res) => {
     let num = parseInt(req.params.num);
     let offset = 0;
 

@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const user = require("./Users");
 const bcrypt = require("bcryptjs");
+const adminAuth = require("../midolowares/adminAuth");
 
-router.get("/admin/users", (req, res) => {
+router.get("/admin/users", adminAuth, (req, res) => {
     user.findAll({ raw: true }).then(users => {
         res.render("admin/users/index", {
             users: users
@@ -11,11 +12,11 @@ router.get("/admin/users", (req, res) => {
     })
 })
 
-router.get("/admin/users/create", (req, res) => {
+router.get("/admin/users/create", adminAuth, (req, res) => {
     res.render("admin/users/create")
 })
 
-router.post("/admin/users/save", (req, res) => {
+router.post("/admin/users/save", adminAuth, (req, res) => {
     let name = req.body.name;
     let email = req.body.email;
     let password = req.body.password;
@@ -54,7 +55,7 @@ router.post("/authenticate", (req, res) => {
                     name: user.name,
                     email: user.email
                 }
-                res.json(req.session.user);
+                res.redirect("/");
             }else{
                 res.redirect("/login")
             }
@@ -62,6 +63,11 @@ router.post("/authenticate", (req, res) => {
             res.redirect("/login")
         }
     })
+})
+
+router.get("/logout", adminAuth, (req, res) => {
+    req.session.user = undefined;
+    res.redirect("/login");
 })
 
 module.exports = router;

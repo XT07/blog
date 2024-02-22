@@ -4,11 +4,12 @@ const register = require("./Article");
 const slugify = require("slugify");
 const category = require("../categoryes/Category");
 const { Sequelize, QueryTypes } = require('sequelize');
+const adminAuth = require("../midolowares/adminAuth");
 
 
 const sequelize = require('../database/connection');
 
-router.get("/admin/articles", (req, res) => {
+router.get("/admin/articles",  adminAuth, (req, res) => {
     sequelize.query(
         'SELECT articles.*, categoryes.titulo AS category_titulo ' +
         'FROM articles ' +
@@ -19,7 +20,7 @@ router.get("/admin/articles", (req, res) => {
     })
 });
 
-router.get("/admin/articles/new", (req, res) => {
+router.get("/admin/articles/new", adminAuth, (req, res) => {
     category.findAll().then((categoryes) => {
         res.render("admin/articles/new", {
             category: categoryes
@@ -27,7 +28,7 @@ router.get("/admin/articles/new", (req, res) => {
     })
 })
 
-router.post("/admin/articles/save", (req, res) => {
+router.post("/admin/articles/save", adminAuth, (req, res) => {
     let title = req.body.title;
     let body = req.body.boddy;
     let category = req.body.category;
@@ -43,7 +44,7 @@ router.post("/admin/articles/save", (req, res) => {
     })
 })
 
-router.post("/admin/articles/delet", (req, res) => {
+router.post("/admin/articles/delet", adminAuth, (req, res) => {
     let id = req.body.id;
     if(id != undefined){
         if(!isNaN(id)){
@@ -62,7 +63,7 @@ router.post("/admin/articles/delet", (req, res) => {
     }
 })
 
-router.post("/admin/articles/edit", (req, res) => {
+router.post("/admin/articles/edit", adminAuth, (req, res) => {
     let id = req.body.id;
     register.findByPk(id).then((articleId) => {
         if (articleId != undefined){
@@ -78,7 +79,7 @@ router.post("/admin/articles/edit", (req, res) => {
     })
 })
 
-router.post("/articles/update", (req, res) => {
+router.post("/articles/update", adminAuth, (req, res) => {
     let id = req.body.id;
     let title = req.body.title;
     let boddy = req.body.boddy;

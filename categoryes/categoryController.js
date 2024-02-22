@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const register = require("./Category");
 const slugify = require("slugify");
+const adminAuth = require("../midolowares/adminAuth");
 
 router.get("/admin/categoryes/new", (req, res) => {
     res.render("admin/categoryes/new");
 })
 
-router.post("/categoryes/save", (req, res) => {
+router.post("/categoryes/save", adminAuth, (req, res) => {
     let title = req.body.title;
     if(title != undefined){
         register.create({
@@ -21,7 +22,7 @@ router.post("/categoryes/save", (req, res) => {
     }
 })
 
-router.get("/admin/categoryes", (req, res) => {
+router.get("/admin/categoryes", adminAuth, (req, res) => {
     register.findAll({ raw: true }).then((categoryes) => {
         res.render("../views/admin/categoryes/index", {
             categoryes: categoryes
@@ -29,7 +30,7 @@ router.get("/admin/categoryes", (req, res) => {
     })
 })
 
-router.post("/category/delet", (req, res) => {
+router.post("/category/delet", adminAuth, (req, res) => {
     let id = req.body.id;
     if(id != undefined){
         if(!isNaN(id)){
@@ -48,7 +49,7 @@ router.post("/category/delet", (req, res) => {
     }
 })
 
-router.post("/admin/category/edit", (req, res) => {
+router.post("/admin/category/edit", adminAuth, (req, res) => {
     let id = req.body.id;
     register.findByPk(id).then((categoryId) => {
         if (categoryId != undefined){
@@ -61,7 +62,7 @@ router.post("/admin/category/edit", (req, res) => {
     })
 })
 
-router.post("/category/update", (req, res) => {
+router.post("/category/update", adminAuth, (req, res) => {
     let id = req.body.id;
     let title = req.body.title;
     register.update({ titulo: title, slug: slugify(title) },{ where: { id:id } }).then(() => {
